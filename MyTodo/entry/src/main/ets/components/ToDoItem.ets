@@ -7,8 +7,8 @@ export default struct ToDoItem {
   @Builder labelIcon(icon: Resource) {
     Image(icon)
       .objectFit(ImageFit.Contain)
-      .width(40)
-      .height(40)
+      .width($r('app.float.checkbox_width'))
+      .height($r('app.float.checkbox_height'))
       .margin({left: 10})
   }
 

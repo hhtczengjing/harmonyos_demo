@@ -2,7 +2,11 @@
   "float": [
     {
       "name": "checkbox_width",
-      "value": "28vp"
+      "value": "40vp"
+    },
+    {
+      "name": "checkbox_height",
+      "value": "40vp"
     }
   ]
 }
