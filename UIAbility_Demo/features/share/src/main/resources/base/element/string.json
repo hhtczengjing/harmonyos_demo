@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "ShareAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "ShareAbility_label",
+      "value": "label"
+    }
+  ]
+}

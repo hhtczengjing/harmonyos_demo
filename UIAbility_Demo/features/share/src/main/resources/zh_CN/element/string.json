@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "ShareAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "ShareAbility_label",
+      "value": "label"
+    }
+  ]
+}
