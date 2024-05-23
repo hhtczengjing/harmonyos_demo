@@ -18,7 +18,6 @@ struct HomeMenuItem {
 
 @Component
 export default struct HomeMenu {
-
   @Prop menus: HomeMenuItemData[]
 
   build() {
@@ -38,5 +37,4 @@ export default struct HomeMenu {
     .backgroundColor(Color.White)
     .borderRadius(24)
   }
-
 }

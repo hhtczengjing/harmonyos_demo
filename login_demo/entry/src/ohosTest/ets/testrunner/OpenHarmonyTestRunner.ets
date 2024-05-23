@@ -56,7 +56,8 @@ export default class OpenHarmonyTestRunner implements TestRunner {
   }
 }
 
-async function checkMock(abilityDelegator: abilityDelegatorRegistry.AbilityDelegator, resourceManager: resourceManager.ResourceManager) {
+async function checkMock(abilityDelegator: abilityDelegatorRegistry.AbilityDelegator,
+  resourceManager: resourceManager.ResourceManager) {
   let rawFile: Uint8Array;
   try {
     rawFile = resourceManager.getRawFileContentSync(jsonPath);
@@ -73,7 +74,8 @@ async function checkMock(abilityDelegator: abilityDelegatorRegistry.AbilityDeleg
   } catch (error) {
     let code = (error as BusinessError).code;
     let message = (error as BusinessError).message;
-    hilog.error(0x0000, tag, `ResourceManager:callback getRawFileContent failed, error code: ${code}, message: ${message}.`);
+    hilog.error(0x0000, tag,
+      `ResourceManager:callback getRawFileContent failed, error code: ${code}, message: ${message}.`);
   }
 }
 

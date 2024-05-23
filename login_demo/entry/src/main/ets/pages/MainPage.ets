@@ -4,8 +4,6 @@ import MineContentView from '../components/MineContentView';
 @Entry
 @Component
 struct MainPage {
-  @State fontColor: string = '#182431'
-  @State selectedFontColor: string = '#007DFF'
   @State currentIndex: number = 0
   private controller: TabsController = new TabsController()
 
@@ -27,7 +25,7 @@ struct MainPage {
   }
 
   build() {
-    Tabs({barPosition: BarPosition.End, controller: this.controller}) {
+    Tabs({ barPosition: BarPosition.End, controller: this.controller }) {
       TabContent() {
         HomeContentView()
       }

@@ -3,7 +3,6 @@ import HomeMenuItemData from '../models/home/HomeMenuItemData'
 import HomeContentData from '../models/HomeContentData'
 
 export class HomeContentDataService {
-
   requestData(): HomeContentData {
     let x = this.getSwiperImages()
     let y = this.getMenuData()

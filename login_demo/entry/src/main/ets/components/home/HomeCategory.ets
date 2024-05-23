@@ -44,7 +44,7 @@ export default struct HomeCategory {
       Grid() {
         ForEach(this.categories, (item: HomeCategoryItemData) => {
           GridItem() {
-            HomeCategoryItem({data: item})
+            HomeCategoryItem({ data: item })
           }
         })
       }

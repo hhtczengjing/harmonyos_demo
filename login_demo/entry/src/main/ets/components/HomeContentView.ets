@@ -7,7 +7,6 @@ import HomeContentData from '../models/HomeContentData'
 
 @Component
 export default struct HomeContentView {
-
   @State homeData?: HomeContentData | null = null;
 
   aboutToAppear(): void {

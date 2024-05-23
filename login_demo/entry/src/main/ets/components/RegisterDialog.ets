@@ -44,7 +44,7 @@ export default struct RegisterDialog {
         Button('确定')
           .onClick(() => {
             if (this.account.length <= 0 || this.password.length <= 0) {
-              promptAction.showToast({message: "请输入用户名或密码"})
+              promptAction.showToast({ message: "请输入用户名或密码" })
               return
             }
             if (this.confirm) {
