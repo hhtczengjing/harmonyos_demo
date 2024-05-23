@@ -1,68 +1,50 @@
+import { Header } from '../common/components/Header'
+import HomeBanner from './home/HomeBanner'
+import HomeCategory from './home/HomeCategory'
+import HomeMenu from './home/HomeMenu'
+import homeDataService from '../services/HomeContentDataService'
+import HomeContentData from '../models/HomeContentData'
+
 @Component
 export default struct HomeContentView {
-  private swiperController: SwiperController = new SwiperController()
-  private images: Resource[] = [$r('app.media.fig1'), $r('app.media.fig2'), $r('app.media.fig3'), $r('app.media.fig4')]
-  private menus: string[] = ['1', '2', '3', '4', '5', '6', '7', '8']
-  private lists: string[] = ['1', '2', '3', '4']
+
+  @State homeData?: HomeContentData | null = null;
+
+  aboutToAppear(): void {
+    this.homeData = homeDataService.requestData()
+  }
 
   build() {
     Column() {
       // 标题
-      Text('首页')
-        .textAlign(TextAlign.Start)
-        .fontSize(30)
-        .fontWeight(FontWeight.Bold)
-        .width('100%')
+      Header('首页')
 
-      // 轮播图
-      Swiper(this.swiperController) {
-        ForEach(this.images, (item: Resource) => {
-          Image(item)
-            .objectFit(ImageFit.Cover)
-            .width('100%')
-            .height('100%')
-        })
+      List({ space: 10 }) {
+        // 轮播图
+        ListItem() {
+          HomeBanner({ swiperData: this.homeData?.banners })
+            .margin({ top: 10 })
+        }
+
+        // 快捷入口
+        ListItem() {
+          HomeMenu({ menus: this.homeData?.menus })
+            .margin({ top: 10 })
+        }
+
+        // 列表
+        ListItem() {
+          HomeCategory({ categories: this.homeData?.categories })
+            .margin({ top: 10 })
+        }
       }
+      .width('100%')
+      .height('100%')
+      .backgroundColor(Color.White)
       .padding(20)
-      .height(240)
-
-      // 快捷入口
-      Grid() {
-        ForEach(this.menus, (item: string) => {
-          GridItem() {
-            Text('xxxx')
-              .backgroundColor(Color.Blue)
-              .width('100%')
-              .height('100%')
-          }
-        })
-      }
-      .columnsTemplate("1fr 1fr 1fr 1fr")
-      .rowsTemplate("1fr 1fr")
-      .columnsGap(10)
-      .rowsGap(10)
-      .height(120)
-
-      // 列表
-      Text('列表')
-      Grid() {
-        ForEach(this.lists, (item: string) => {
-          GridItem() {
-            Text('xxxx')
-              .backgroundColor(Color.Blue)
-              .width('100%')
-              .height('100%')
-          }
-        })
-      }
-      .columnsTemplate("1fr 1fr")
-      .rowsTemplate("1fr 1fr")
-      .columnsGap(10)
-      .rowsGap(10)
-      .height(180)
     }
+    .backgroundColor($r('app.color.content_page_background'))
     .width('100%')
     .height('100%')
   }
-
 }

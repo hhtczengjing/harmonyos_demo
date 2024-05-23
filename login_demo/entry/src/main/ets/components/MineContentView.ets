@@ -1,53 +1,66 @@
+import { Header } from '../common/components/Header'
 import {SettingListItem, SettingListItemData} from './mine/SettingListItem'
-import UserInfoView from './mine/UserInfoView'
+import {UserInfoView} from './mine/UserInfoView'
+import mineDataService from '../services/MineContentDataService'
+import MineContentData from '../models/MineContentData'
 
 @Component
 export default struct MineContentView {
 
-  private items: SettingListItemData[] = [
-    {icon: $r('app.media.news'), title: '推送通知', type: 1},
-    {icon: $r('app.media.storage'), title: '数据管理', type: 0},
-    {icon: $r('app.media.menu'), title: '菜单设置', type: 0},
-    {icon: $r('app.media.recycle'), title: '清除缓存', type: 0},
-    {icon: $r('app.media.privacy'), title: '隐私协议', type: 0},
-    {icon: $r('app.media.about'), title: '关于我们', type: 0}
-  ]
+  @State mineData?: MineContentData | null = null;
+
+  aboutToAppear(): void {
+    this.mineData = mineDataService.requestData()
+  }
 
   build() {
     Column() {
       // 标题
-      Text('我的')
-        .textAlign(TextAlign.Start)
-        .fontSize(30)
-        .fontWeight(FontWeight.Bold)
-        .width('100%')
+      Header('我的')
 
       // 登录用户
-      UserInfoView()
-        .margin({top: 24, left: 20, right: 20})
-        .padding({top: 10, bottom: 10})
-        .backgroundColor(Color.Red)
-        .borderRadius(8)
+      UserInfoView({data: this.mineData?.userInfo})
+        .margin({ top: 24 })
+        .width('100%')
+        .height(96)
+        .backgroundColor(Color.White)
+        .padding({ left: 24})
+        .borderRadius(16)
 
       // 列表
       List() {
-        ForEach(this.items, (item: SettingListItemData) => {
+        ForEach(this.mineData?.settings, (item: SettingListItemData) => {
           ListItem() {
             SettingListItem({data: item})
           }
         })
       }
-      .margin({top: 24})
+      .scrollBar(BarState.Off)
+      .backgroundColor(Color.White)
+      .width('100%')
+      .height('45%')
+      .divider({
+        strokeWidth: 0.25,
+        color: Color.Grey,
+        startMargin: 42,
+        endMargin: 24
+      })
+      .borderRadius(16)
+      .padding({ top: 4, bottom: 4})
 
       Blank()
 
       // 退出登录
-      Button('退出')
-        .fontColor(Color.Red)
-        .backgroundColor(Color.Gray)
+      Button('退出', { type: ButtonType.Capsule })
         .width('90%')
-        .margin({bottom: 40})
+        .height(40)
+        .fontSize(16)
+        .fontColor('#FA2A2D')
+        .fontWeight(FontWeight.Medium)
+        .backgroundColor('#E5E8EA')
+        .margin({ bottom: 55 })
     }
+    .backgroundColor($r('app.color.content_page_background'))
     .width('100%')
     .height('100%')
   }

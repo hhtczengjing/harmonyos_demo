@@ -1,8 +1,4 @@
-interface SettingListItemData {
-  icon: Resource
-  title: string
-  type: number
-}
+import SettingListItemData from '../../models/mine/SettingListItemData'
 
 @Component
 struct SettingListItem {
@@ -44,10 +40,7 @@ struct SettingListItem {
       .width('100%')
       .height('100%')
 
-      Divider()
-        .strokeWidth(1)
-        .color('#F1F3F5')
-        .margin({left: 10, right: 10})
+
     }
     .width('100%')
     .height(56)

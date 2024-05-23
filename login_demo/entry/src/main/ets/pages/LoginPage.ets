@@ -50,20 +50,22 @@ struct Index {
         TextInput({ placeholder: '账号' })
           .type(InputType.Normal)
           .height(60)
-          .style(TextInputStyle.Inline)
           .backgroundColor(Color.White)
           .onChange((value) => {
             this.account = value
           })
+        Line()
+          .lineStyle()
 
         TextInput({ placeholder: '密码' })
           .type(InputType.Password)
           .height(60)
-          .style(TextInputStyle.Inline)
           .backgroundColor(Color.White)
           .onChange((value) => {
             this.password = value
           })
+        Line()
+          .lineStyle()
       }
       .width('100%')
       .margin({top: 40})
@@ -149,4 +151,11 @@ struct Index {
       url: 'pages/MainPage'
     })
   }
+}
+
+@Extend(Line)
+function lineStyle() {
+  .width('100%')
+  .height(1)
+  .backgroundColor('#33182431')
 }

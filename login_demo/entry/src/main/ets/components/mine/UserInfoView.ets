@@ -1,8 +1,4 @@
-interface UserInfoData {
-  avatar?: string
-  name: string
-  email: string
-}
+import UserInfoData from '../../models/mine/UserInfoData'
 
 @Component
 struct UserInfoView {
@@ -31,7 +27,6 @@ struct UserInfoView {
         Text(this.data?.email)
           .width('100%')
       }
-      .padding({left: 20})
     }
   }
 }
