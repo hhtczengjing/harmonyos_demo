@@ -4,6 +4,7 @@ import UserInfoView from './mine/UserInfoView'
 import mineDataService from '../services/MineContentDataService'
 import MineContentData from '../models/MineContentData'
 import SettingListItemData from '../models/mine/SettingListItemData'
+import { router } from '@kit.ArkUI'
 
 @Component
 export default struct MineContentView {
@@ -55,6 +56,9 @@ export default struct MineContentView {
           .fontWeight(FontWeight.Medium)
           .backgroundColor('#E5E8EA')
           .margin({bottom: 44})
+          .onClick(() => {
+            router.replaceUrl({url: 'pages/LoginPage'})
+          })
       }
       .margin({left: 16, right: 16, bottom: 40})
       .height('90%')
