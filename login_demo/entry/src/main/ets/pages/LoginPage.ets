@@ -178,6 +178,7 @@ struct Index {
     this.timeOutId = setTimeout(() => {
       this.isLoading = false;
       this.timeOutId = -1;
+      AppStorage.set<Record<string, string>>('LoginData', {'account': this.account, 'password': this.password});
       router.replaceUrl({ url: 'pages/MainPage' });
     }, 2000);
   }
