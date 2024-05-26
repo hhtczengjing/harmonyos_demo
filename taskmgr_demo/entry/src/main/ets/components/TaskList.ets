@@ -1,4 +1,3 @@
-import currentTime from '../common/utils/DateTime'
 import Task from '../models/Task'
 import TaskItem from './TaskItem'
 
@@ -11,13 +10,13 @@ function operateTextStyle(color: Resource|string) {
 }
 
 @Extend(Button)
-function operateButtonStyle() {
+function operateButtonStyle(color: Resource|string) {
   .fontSize(16)
-  .fontColor(Color.Blue)
+  .fontColor(color)
   .fontWeight(FontWeight.Regular)
-  .height(44)
-  .width(80)
-  .backgroundColor(Color.Gray)
+  .height(40)
+  .width(156)
+  .backgroundColor('#0D182431')
 }
 
 @Component
@@ -25,6 +24,7 @@ export default struct TaskList {
   @Link tasks: Task[];
   @State isEditMode: boolean = false;
   onAddClick?: () => void;
+  @State selectedTask: boolean[] = []
 
   build() {
     Column() {
@@ -67,11 +67,13 @@ export default struct TaskList {
 
       // 任务列表
       List({space: 12}) {
-        ForEach(this.tasks, (item: Task) => {
+        ForEach(this.tasks, (item: Task, index: number) => {
           ListItem() {
             TaskItem({
+              index: index,
               task: item,
-              isEditMode: this.isEditMode
+              isEditMode: this.isEditMode,
+              selectedTask: this.selectedTask
             })
           }
         })
@@ -86,13 +88,13 @@ export default struct TaskList {
       // 操作按钮
       if (this.isEditMode) {
         Button('删除')
-          .operateButtonStyle()
+          .operateButtonStyle('#E84026')
           .onClick(() => {
 
           })
       } else {
         Button('新增')
-          .operateButtonStyle()
+          .operateButtonStyle('#007DFF')
           .onClick(() => {
             if (this.onAddClick) {
               this.onAddClick()

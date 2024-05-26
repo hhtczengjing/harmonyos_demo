@@ -4,7 +4,8 @@ import ProgressEdit from './ProgressEdit'
 
 @Component
 export default struct TaskItem {
-
+  // 当前任务的索引
+  index: number = 0;
   // 当前的任务
   @Prop task: Task;
   // 是否开启编辑模式
@@ -15,6 +16,8 @@ export default struct TaskItem {
   @State latestProgress?: number = 0;
   // 最新的更新时间
   @State updateDate?: string = '';
+  // 选中的任务列表
+  @Link selectedTask: boolean[];
 
   aboutToAppear(): void {
     // 在组件显示前先从任务初始化数据
@@ -101,9 +104,9 @@ export default struct TaskItem {
             .width(20)
             .selectedColor('#007DFF')
             .onChange((isChecked) => {
-
+              this.selectedTask[this.index] = isChecked
             })
-            .select(false)
+            .select(this.selectedTask[this.index])
         }
         .height('100%')
         .justifyContent(FlexAlign.Center)
