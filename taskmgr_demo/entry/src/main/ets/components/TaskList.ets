@@ -139,13 +139,20 @@ export default struct TaskList {
   }
 
   onSelectedTaskChanged() {
+    // 数量不一致表示之前没有点过全选/反选，这种情况下不需要处理
     if (this.selectedTask.length != this.tasks.length) {
       return
     }
     Logger.info('onSelectedTaskChanged', JSON.stringify(this.selectedTask))
-    let items = this.selectedTask.filter((item) => {
-      return !item
-    })
-    this.selectAll = !(items.length > 0)
+    // 只要有一个没选中就需要关闭全选
+    let allSelected = true
+    for (let i = 0; i < this.selectedTask.length; i++) {
+      let item = this.selectedTask[i]
+      if (item == undefined || item == null || !item) {
+        allSelected = false
+        break
+      }
+    }
+    this.selectAll = allSelected
   }
 }
