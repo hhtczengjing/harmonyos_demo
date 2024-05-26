@@ -8,7 +8,7 @@ export default struct AddTaskDialog {
   @State taskName: string = ''
 
   build() {
-    Column() {
+    Column({space: 20}) {
       Text('添加任务')
         .fontSize(20)
         .fontWeight(FontWeight.Bold)
@@ -38,5 +38,9 @@ export default struct AddTaskDialog {
       .width('100%')
       .height('10%')
     }
+    .padding(20)
+    .width('90%')
+    .backgroundColor(Color.White)
+    .borderRadius(16)
   }
 }

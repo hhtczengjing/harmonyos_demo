@@ -5,7 +5,10 @@ class Tasks {
 
   // 添加任务
   add(task: Task) {
-
+    if (task.name === '' || task.update === '' || task.progress < 0) {
+      return
+    }
+    this._allTaskData.push(task)
   }
 
   // 删除选中任务

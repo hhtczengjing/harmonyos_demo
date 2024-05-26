@@ -3,19 +3,18 @@ import Task from '../models/Task'
 import ProgressEdit from './ProgressEdit'
 
 @Component
-@Entry
 export default struct TaskItem {
 
   // 当前的任务
-  @State task: Task = new Task('测试', currentTime(), 10)
+  @Prop task: Task;
   // 是否开启编辑模式
-  @Prop isEditMode: boolean = true
+  @Prop isEditMode: boolean;
   // 是否展开面板
-  @Prop isExpanded: boolean = true
+  @Prop isExpanded: boolean;
   // 最新的进度
-  @State latestProgress?: number = 0
+  @State latestProgress?: number = 0;
   // 最新的更新时间
-  @State updateDate?: string = ''
+  @State updateDate?: string = '';
 
   aboutToAppear(): void {
     // 在组件显示前先从任务初始化数据
@@ -47,7 +46,7 @@ export default struct TaskItem {
 
         // 更新时间
         Text(`最近更新: ${this.updateDate}`)
-          .fontSize(16)
+          .fontSize(12)
           .fontColor('#182431')
           .opacity(0.4)
           .fontWeight(500)
@@ -55,8 +54,6 @@ export default struct TaskItem {
       }
       .alignItems(HorizontalAlign.End)
     }
-    .width('100%')
-    .padding(20)
   }
 
   build() {
@@ -83,13 +80,16 @@ export default struct TaskItem {
           })
         }
       }
+      .width('100%')
       .height(this.isExpanded ? 148 : 64)
+      .backgroundColor(Color.White)
+      .borderRadius(24)
       .onClick(() => {
         this.isExpanded = !this.isExpanded
       })
       .padding({
         left: 16,
-        top: 12,
+        top: 14,
         right: this.isEditMode ? 54 : 16,
         bottom: 12
       })
@@ -99,7 +99,7 @@ export default struct TaskItem {
           Checkbox()
             .margin({right: 16})
             .width(20)
-            .selectedColor(Color.Blue)
+            .selectedColor('#007DFF')
             .onChange((isChecked) => {
 
             })

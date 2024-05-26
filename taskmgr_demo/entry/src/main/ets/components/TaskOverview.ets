@@ -1,9 +1,11 @@
 @Component
-@Preview
 export default struct TaskOverview {
-  @Prop totalCount: number = 10;
-  @Prop completedCount: number = 2;
-  @Prop updateAt: string = '2024/5/25 20:00:00';
+  // 任务总数
+  @Prop totalCount: number;
+  // 完成任务数
+  @Prop completedCount: number;
+  // 最后更新时间
+  @Prop updateAt: string;
 
   @Builder
   Header() {
@@ -65,6 +67,8 @@ export default struct TaskOverview {
       this.Header()
       this.TotalProgress()
     }
-    .borderRadius(10)
+    .width('93.3%')
+    .backgroundColor(Color.White)
+    .borderRadius(24)
   }
 }
