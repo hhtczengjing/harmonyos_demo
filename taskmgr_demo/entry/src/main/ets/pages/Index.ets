@@ -81,6 +81,12 @@ struct Index {
         tasks: $tasks,
         onAddClick: () => {
           this.dialogController.open()
+        },
+        onDeleteClick: (selectedTasks: boolean[]) => {
+          // 删除数据
+          Tasks.delete(selectedTasks)
+          // 重新获取全部任务
+          this.reloadData()
         }
       })
         .height('55%')

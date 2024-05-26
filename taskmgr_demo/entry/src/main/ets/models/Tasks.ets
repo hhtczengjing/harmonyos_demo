@@ -12,8 +12,10 @@ class Tasks {
   }
 
   // 删除选中任务
-  delete(tasks: Task[]) {
-    
+  delete(selected: boolean[]) {
+    this._allTaskData = this._allTaskData.filter((_ ,index) => {
+      return !selected[index]
+    })
   }
 
   public get allTaskData(): Task[] {
