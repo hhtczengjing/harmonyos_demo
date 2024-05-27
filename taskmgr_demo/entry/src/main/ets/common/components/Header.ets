@@ -6,5 +6,5 @@ export function Header(content?: string | Resource) {
     .textAlign(TextAlign.Start)
     .width('100%')
     .height(32)
-    .margin({ left: 16, top: 12, bottom: 12 })
+    .margin({ left: 18, top: 12, bottom: 12 })
 }

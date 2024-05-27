@@ -3,7 +3,7 @@ import Task from '../models/Task'
 import TaskItem from './TaskItem'
 
 @Extend(Text)
-function operateTextStyle(color: Resource|string) {
+function operateTextStyle(color: Resource | string) {
   .fontSize(16)
   .fontColor(color)
   .lineHeight(19)
@@ -11,7 +11,7 @@ function operateTextStyle(color: Resource|string) {
 }
 
 @Extend(Button)
-function operateButtonStyle(color: Resource|string) {
+function operateButtonStyle(color: Resource | string) {
   .fontSize(16)
   .fontColor(color)
   .fontWeight(FontWeight.Regular)
@@ -26,7 +26,7 @@ export default struct TaskList {
   @Link tasks: Task[];
   // 是否开启编辑模式
   @State isEditMode: boolean = false;
-  // 选中的任务状态
+  // 选中的任务状态，并监听数据的变化情况
   @State @Watch('onSelectedTaskChanged') selectedTask: boolean[] = [];
   // 全选状态
   @State selectAll: boolean = false;
@@ -38,59 +38,30 @@ export default struct TaskList {
   build() {
     Column() {
       // 标题区域(标题 + 编辑按钮)
-      Row() {
-        Text('任务')
-          .fontSize(20)
-          .fontWeight(FontWeight.Bold)
-
-        Blank()
-
-        // 仅有任务数据的时候才需要显示编辑入口
-        if (this.tasks.length > 0) {
-          if (this.isEditMode) {
-            // 取消按钮
-            Text('取消')
-              .operateTextStyle('#007DFF')
-              .onClick(() => {
-                // 关闭编辑模式
-                this.isEditMode = false
-                // 重置选中模式
-                this.selectAll = false
-                this.selectedTask = this.tasks.map(() => false)
-                Logger.info('点击取消' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
-              })
-
-            // 全选按钮(文本 + checkbox)
-            Text('全选')
-              .operateTextStyle('#007DFF')
-              .margin({left: 20})
-            Checkbox()
-              .select(this.selectAll)
-              .selectedColor('#007DFF')
-              .width(20)
-              .onClick(() => {
-                this.selectAll = !this.selectAll
-                this.selectedTask = this.tasks.map(() => this.selectAll)
-                Logger.info('点击全选' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
-            })
-          } else {
-            Text('编辑')
-              .operateTextStyle('#007DFF')
-              .onClick(() => {
-                this.isEditMode = true
-              })
-          }
-        }
-      }
-      .padding({left: 16, right: 12})
-      .width('100%')
-      .height(30)
+      this.titleView()
 
       // 任务列表
-      List({space: 12}) {
+      this.listView()
+
+      // 空白
+      Blank()
+
+      // 操作按钮
+      this.bottomButton()
+    }
+    .width('93.3%')
+    .height('100%')
+    .padding({ top: 16 })
+  }
+
+  @Builder
+  listView() {
+    if (this.tasks.length > 0) {
+      List({ space: 12 }) {
         ForEach(this.tasks, (item: Task, index: number) => {
           ListItem() {
             TaskItem({
+              tasks: $tasks,
               index: index,
               task: item,
               isEditMode: this.isEditMode,
@@ -100,42 +71,110 @@ export default struct TaskList {
         })
       }
       .edgeEffect(EdgeEffect.Spring)
-      .margin({top: 12})
+      .margin({ top: 12 })
       .width('100%')
       .height('80%')
+    } else {
+      Column() {
+        Image($r('app.media.empty_no_data'))
+          .objectFit(ImageFit.Cover)
+          .width(160)
+          .height(140)
+
+        Text('暂无任务，快去添加吧')
+          .fontSize(14)
+          .margin({ top: 10 })
+      }
+      .margin({ top: 60 })
+      .width('100%')
+      .height('80%')
+    }
+  }
+
+  @Builder
+  titleView() {
+    Row() {
+      Text('任务')
+        .fontSize(20)
+        .fontWeight(FontWeight.Bold)
 
       Blank()
 
-      // 操作按钮
-      if (this.isEditMode) {
-        Button('删除')
-          .operateButtonStyle('#E84026')
-          .onClick(() => {
-            // 通知上层删除任务
-            if (this.onDeleteClick) {
-              this.onDeleteClick(this.selectedTask)
-            }
-            // 删除后退出编辑模式
-            this.isEditMode = false
-            // 重置选中模式
-            this.selectAll = false
-            this.selectedTask = this.tasks.map(() => false)
-            Logger.info('点击删除' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
-          })
-      } else {
-        Button('新增')
-          .operateButtonStyle('#007DFF')
-          .onClick(() => {
-            if (this.onAddClick) {
-              this.onAddClick()
-            }
-            Logger.info('点击新增')
-          })
+      // 仅有任务数据的时候才需要显示编辑入口
+      if (this.tasks.length > 0) {
+        if (this.isEditMode) {
+          // 取消按钮
+          Text('取消')
+            .operateTextStyle('#007DFF')
+            .onClick(() => {
+              // 关闭编辑模式
+              this.isEditMode = false
+              // 重置选中模式
+              this.selectAll = false
+              this.selectedTask = this.tasks.map(() => false)
+              Logger.info('点击取消' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
+            })
+
+          // 全选按钮(文本 + checkbox)
+          Text('全选')
+            .operateTextStyle('#007DFF')
+            .margin({ left: 20 })
+            .onClick(() => {
+              this.selectAll = !this.selectAll
+              this.selectedTask = this.tasks.map(() => this.selectAll)
+              Logger.info('点击全选文本' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
+            })
+          Checkbox()
+            .select(this.selectAll)
+            .selectedColor('#007DFF')
+            .width(20)
+            .onClick(() => {
+              this.selectAll = !this.selectAll
+              this.selectedTask = this.tasks.map(() => this.selectAll)
+              Logger.info('点击全选按钮' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
+            })
+
+        } else {
+          Text('编辑')
+            .operateTextStyle('#007DFF')
+            .onClick(() => {
+              this.isEditMode = true
+            })
+        }
       }
     }
-    .width('93.3%')
-    .height('100%')
-    .padding({top: 16})
+    .padding({ left: 16, right: 12 })
+    .width('100%')
+    .height(30)
+  }
+
+  @Builder
+  bottomButton() {
+    if (this.isEditMode) {
+      Button('删除')
+        .operateButtonStyle('#E84026')
+        .onClick(() => {
+          // 通知上层删除任务
+          if (this.onDeleteClick) {
+            this.onDeleteClick(this.selectedTask)
+          }
+          // 删除后退出编辑模式
+          this.isEditMode = false
+          // 重置选中模式
+          this.selectAll = false
+          this.selectedTask = this.tasks.map(() => false)
+          Logger.info('点击删除' + this.selectAll + ', ' + JSON.stringify(this.selectedTask))
+        })
+    } else {
+      Button('新增')
+        .operateButtonStyle('#007DFF')
+        .onClick(() => {
+          if (this.onAddClick) {
+            this.onAddClick()
+          }
+          Logger.info('点击新增')
+        })
+    }
   }
 
   onSelectedTaskChanged() {

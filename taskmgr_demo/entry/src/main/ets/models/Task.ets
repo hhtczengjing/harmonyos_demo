@@ -10,4 +10,9 @@ export default class Task {
     this.update = update
     this.progress = progress
   }
+
+  updateData(update: string, progress: number) {
+    this.update = update
+    this.progress = progress
+  }
 }

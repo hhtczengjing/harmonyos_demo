@@ -35,7 +35,7 @@ export default struct ProgressEdit {
       Row() {
         TextButton({title: '取消'})
           .onClick(() => {
-            Logger.debug('点击取消按钮')
+            Logger.debug('点击取消按钮', this.progress.toString())
             if (this.onCancel) {
               this.onCancel()
             }
@@ -51,7 +51,7 @@ export default struct ProgressEdit {
             }
           })
       }
-      .width('70%')
+      .width('75%')
       .padding(10)
     }
   }

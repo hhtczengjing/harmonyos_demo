@@ -4,6 +4,8 @@ import ProgressEdit from './ProgressEdit'
 
 @Component
 export default struct TaskItem {
+  // 任务列表
+  @Link tasks: Task[];
   // 当前任务的索引
   index: number = 0;
   // 当前的任务
@@ -18,6 +20,8 @@ export default struct TaskItem {
   @State updateDate?: string = '';
   // 选中的任务列表
   @Link selectedTask: boolean[];
+  // 进度变化
+  @Consume progressChanged: boolean;
 
   aboutToAppear(): void {
     // 在组件显示前先从任务初始化数据
@@ -75,9 +79,15 @@ export default struct TaskItem {
               this.isExpanded = false
             },
             onConfirm: (value) => {
-              // 确认操作，更新数据(通知上层刷新)，并将编辑区域折叠
+              // 确认操作，更新数据(通知上层刷新)
               this.updateDate = currentTime()
               this.latestProgress = value
+              // 更新数据
+              this.task.updateData(this.updateDate, this.latestProgress)
+              this.tasks[this.index] = this.task
+              // 通知进度发生变化
+              this.progressChanged = !this.progressChanged
+              // 将编辑区域折叠
               this.isExpanded = false
             }
           })
