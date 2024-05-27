@@ -1,3 +1,5 @@
+import CommonConstants from '../common/constants/CommonConstants'
+
 type ConfirmBlock = (value: string) => void
 
 @Component
@@ -35,7 +37,7 @@ export default struct AddTaskDialog {
           })
       }
       .padding(20)
-      .width('100%')
+      .width(CommonConstants.FULL_WIDTH)
       .height('10%')
     }
     .padding(20)

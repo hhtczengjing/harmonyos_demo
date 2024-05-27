@@ -1,3 +1,5 @@
+import CommonConstants from '../common/constants/CommonConstants';
+
 @Component
 export default struct TaskOverview {
   // 任务总数
@@ -28,7 +30,7 @@ export default struct TaskOverview {
       .margin({left: 20})
     }
     .padding(10)
-    .width('100%')
+    .width(CommonConstants.FULL_WIDTH)
   }
 
   @Builder
@@ -59,7 +61,7 @@ export default struct TaskOverview {
       }
     }
     .padding(10)
-    .width('100%')
+    .width(CommonConstants.FULL_WIDTH)
   }
 
   build() {

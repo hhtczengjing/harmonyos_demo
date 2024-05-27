@@ -1,3 +1,4 @@
+import CommonConstants from '../common/constants/CommonConstants'
 import Logger from '../common/utils/Logger'
 import Task from '../models/Task'
 import TaskItem from './TaskItem'
@@ -86,7 +87,7 @@ export default struct TaskList {
           .margin({ top: 10 })
       }
       .margin({ top: 60 })
-      .width('100%')
+      .width(CommonConstants.FULL_WIDTH)
       .height('80%')
     }
   }
@@ -144,7 +145,7 @@ export default struct TaskList {
       }
     }
     .padding({ left: 16, right: 12 })
-    .width('100%')
+    .width(CommonConstants.FULL_WIDTH)
     .height(30)
   }
 

@@ -1,10 +1,10 @@
+import CommonConstants from '../common/constants/CommonConstants';
 import Logger from '../common/utils/Logger';
 
 @Component
-@Entry
 export default struct ProgressEdit {
   // 进度
-  @Prop progress: number = 20;
+  @Prop progress: number;
   // 点击取消的回调
   onCancel?: () => void;
   // 点击确定的回调
@@ -30,7 +30,7 @@ export default struct ProgressEdit {
           .fontColor($r('sys.color.ohos_id_text_color_active'))
       }
       .justifyContent(FlexAlign.Center)
-      .width('100%')
+      .width(CommonConstants.FULL_WIDTH)
 
       Row() {
         TextButton({title: '取消'})

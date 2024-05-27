@@ -6,6 +6,7 @@ import TaskOverview from '../components/TaskOverview';
 import Task from '../models/Task';
 import Tasks from '../models/Tasks';
 import { promptAction } from '@kit.ArkUI';
+import CommonConstants from '../common/constants/CommonConstants';
 
 @Entry
 @Component
@@ -53,7 +54,7 @@ struct HomePage {
     this.tasks = Tasks.allTaskData
     this.totalCount = this.tasks.length
     this.completedCount = this.tasks.filter((task) => {
-      return task.progress == 100;
+      return task.progress == CommonConstants.SLIDER_MAX_VALUE;
     }).length
   }
 
@@ -61,7 +62,7 @@ struct HomePage {
     this.tasks = Tasks.allTaskData
     this.totalCount = this.tasks.length
     this.completedCount = this.tasks.filter((task) => {
-      return task.progress == 100;
+      return task.progress == CommonConstants.SLIDER_MAX_VALUE;
     }).length
     this.latestUpdateDate = currentTime()
   }
@@ -93,17 +94,12 @@ struct HomePage {
       })
         .height('60%')
     }
+    .width(CommonConstants.FULL_WIDTH)
+    .height(CommonConstants.FULL_HEIGHT)
     .backgroundColor('#F1F3F5')
-    .height('100%')
-    .width('100%')
   }
 
   onProgressChanged() {
-    this.tasks = Tasks.allTaskData
-    this.totalCount = this.tasks.length
-    this.completedCount = this.tasks.filter((task) => {
-      return task.progress == 100;
-    }).length
-    this.latestUpdateDate = currentTime()
+    this.reloadData()
   }
 }

@@ -40,6 +40,7 @@ export default struct TaskItem {
         .width('30%')
         .textAlign(TextAlign.Start)
         .maxLines(2)
+        .decoration({ type: this.latestProgress === 100 ? TextDecorationType.LineThrough : TextDecorationType.None })
 
       Blank()
 
@@ -57,14 +58,14 @@ export default struct TaskItem {
           .fontColor('#182431')
           .opacity(0.4)
           .fontWeight(500)
-          .margin({top: 2})
+          .margin({ top: 2 })
       }
       .alignItems(HorizontalAlign.End)
     }
   }
 
   build() {
-    Stack({alignContent: Alignment.TopEnd}) {
+    Stack({ alignContent: Alignment.TopEnd }) {
       Column() {
         // 任务基本信息
         this.TaskInfo()
@@ -95,10 +96,14 @@ export default struct TaskItem {
       }
       .width('100%')
       .height(this.isExpanded ? 148 : 64)
-      .backgroundColor(Color.White)
+      .opacity(this.latestProgress === 100 ? 0.6 : 1) // 完成的任务调整透明度
+      .backgroundColor(this.selectedTask[this.index] ? '#1A007DFF' : Color.White)
       .borderRadius(24)
       .onClick(() => {
-        this.isExpanded = !this.isExpanded
+        // 展开折叠动画
+        animateTo({duration: 300}, () => {
+          this.isExpanded = !this.isExpanded
+        })
       })
       .padding({
         left: 16,
@@ -110,7 +115,7 @@ export default struct TaskItem {
       if (this.isEditMode) {
         Column() {
           Checkbox()
-            .margin({right: 16})
+            .margin({ right: 16 })
             .width(20)
             .selectedColor('#007DFF')
             .onChange((isChecked) => {
