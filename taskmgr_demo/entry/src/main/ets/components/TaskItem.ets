@@ -1,6 +1,7 @@
-import currentTime from '../common/utils/DateTime'
-import Task from '../models/Task'
-import ProgressEdit from './ProgressEdit'
+import CommonConstants from '../common/constants/CommonConstants';
+import currentTime from '../common/utils/DateTime';
+import Task from '../models/Task';
+import ProgressEdit from './ProgressEdit';
 
 @Component
 export default struct TaskItem {
@@ -15,7 +16,7 @@ export default struct TaskItem {
   // 是否展开面板
   @Prop isExpanded: boolean;
   // 最新的进度
-  @State latestProgress?: number = 0;
+  @State latestProgress?: number = CommonConstants.SLIDER_MIN_VALUE;
   // 最新的更新时间
   @State updateDate?: string = '';
   // 选中的任务列表
@@ -40,7 +41,10 @@ export default struct TaskItem {
         .width('30%')
         .textAlign(TextAlign.Start)
         .maxLines(2)
-        .decoration({ type: this.latestProgress === 100 ? TextDecorationType.LineThrough : TextDecorationType.None })
+        .decoration({
+          type: this.latestProgress === CommonConstants.SLIDER_MAX_VALUE ? TextDecorationType.LineThrough :
+          TextDecorationType.None
+        })
 
       Blank()
 
@@ -73,6 +77,7 @@ export default struct TaskItem {
         // 进度编辑区域
         if (this.isExpanded) {
           Blank()
+
           ProgressEdit({
             progress: this.latestProgress,
             onCancel: () => {
@@ -94,14 +99,14 @@ export default struct TaskItem {
           })
         }
       }
-      .width('100%')
+      .width(CommonConstants.FULL_WIDTH)
       .height(this.isExpanded ? 148 : 64)
       .opacity(this.latestProgress === 100 ? 0.6 : 1) // 完成的任务调整透明度
       .backgroundColor(this.selectedTask[this.index] ? '#1A007DFF' : Color.White)
       .borderRadius(24)
       .onClick(() => {
         // 展开折叠动画
-        animateTo({duration: 300}, () => {
+        animateTo({ duration: 300 }, () => {
           this.isExpanded = !this.isExpanded
         })
       })
@@ -118,16 +123,16 @@ export default struct TaskItem {
             .margin({ right: 16 })
             .width(20)
             .selectedColor('#007DFF')
+            .select(this.selectedTask[this.index])
             .onChange((isChecked) => {
               this.selectedTask[this.index] = isChecked
             })
-            .select(this.selectedTask[this.index])
         }
-        .height('100%')
+        .height(CommonConstants.FULL_HEIGHT)
         .justifyContent(FlexAlign.Center)
       }
     }
-    .width('100%')
+    .width(CommonConstants.FULL_WIDTH)
     .height(this.isExpanded ? 148 : 64)
   }
 }

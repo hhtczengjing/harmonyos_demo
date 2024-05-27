@@ -16,10 +16,14 @@ export default struct ProgressEdit {
     Column() {
       Row() {
         // 进度滑块
-        Slider({ value: this.progress, step: 1, style: SliderStyle.InSet })
+        Slider({
+          value: this.progress,
+          step: CommonConstants.SLIDER_STEP,
+          style: SliderStyle.InSet
+        })
           .width('80%')
           .onChange((value, mode) => {
-            Logger.debug('进度发生变化', value.toString())
+            Logger.debug('进度发生变化', 'value: ' + value.toString())
             this.progress = Math.trunc(value)
             this.mode = mode
           })
@@ -33,9 +37,9 @@ export default struct ProgressEdit {
       .width(CommonConstants.FULL_WIDTH)
 
       Row() {
-        TextButton({title: '取消'})
+        TextButton({ title: '取消' })
           .onClick(() => {
-            Logger.debug('点击取消按钮', this.progress.toString())
+            Logger.debug('点击取消按钮', 'value: ' + this.progress.toString())
             if (this.onCancel) {
               this.onCancel()
             }
@@ -43,9 +47,9 @@ export default struct ProgressEdit {
 
         Blank()
 
-        TextButton({title: '确定'})
+        TextButton({ title: '确定' })
           .onClick(() => {
-            Logger.debug('点击确定按钮', this.progress.toString())
+            Logger.debug('点击确定按钮', 'value: ' + this.progress.toString())
             if (this.onConfirm) {
               this.onConfirm(this.progress)
             }
@@ -64,15 +68,16 @@ struct TextButton {
 
   build() {
     Text(this.title)
+      .width(96)
+      .padding(5)
       .backgroundColor(this.bgColor)
       .borderRadius(10)
       .fontSize($r('sys.float.ohos_id_text_size_button1'))
       .fontColor($r('sys.color.ohos_id_text_color_active'))
-      .width(96)
       .textAlign(TextAlign.Center)
-      .padding(5)
       .onTouch((e) => {
-        this.bgColor = e.type == TouchType.Down ? $r('sys.color.ohos_id_picker_press_color') : $r('sys.color.ohos_id_color_button_normal')
+        this.bgColor = e.type == TouchType.Down ? $r('sys.color.ohos_id_picker_press_color') :
+        $r('sys.color.ohos_id_color_button_normal')
       })
   }
 }

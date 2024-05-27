@@ -66,7 +66,10 @@ export default struct TaskOverview {
 
   build() {
     Column() {
+      // 标题
       this.Header()
+
+      // 总进度
       this.TotalProgress()
     }
     .width('93.3%')

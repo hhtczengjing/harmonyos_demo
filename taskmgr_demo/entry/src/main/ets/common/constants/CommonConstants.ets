@@ -21,4 +21,9 @@ export default class CommonConstants {
    * slider最大值: 100
    */
   static readonly SLIDER_MAX_VALUE: number = 100;
+
+  /**
+   * slider步长: 1
+   */
+  static readonly SLIDER_STEP: number = 1;
 }

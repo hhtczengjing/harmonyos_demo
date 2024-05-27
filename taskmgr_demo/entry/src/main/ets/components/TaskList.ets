@@ -51,7 +51,7 @@ export default struct TaskList {
       this.bottomButton()
     }
     .width('93.3%')
-    .height('100%')
+    .height(CommonConstants.FULL_HEIGHT)
     .padding({ top: 16 })
   }
 
@@ -71,10 +71,10 @@ export default struct TaskList {
           }
         })
       }
-      .edgeEffect(EdgeEffect.Spring)
-      .margin({ top: 12 })
-      .width('100%')
+      .width(CommonConstants.FULL_WIDTH)
       .height('80%')
+      .margin({ top: 12 })
+      .edgeEffect(EdgeEffect.Spring)
     } else {
       Column() {
         Image($r('app.media.empty_no_data'))
@@ -86,9 +86,9 @@ export default struct TaskList {
           .fontSize(14)
           .margin({ top: 10 })
       }
-      .margin({ top: 60 })
       .width(CommonConstants.FULL_WIDTH)
       .height('80%')
+      .margin({ top: 60 })
     }
   }
 
@@ -144,9 +144,9 @@ export default struct TaskList {
         }
       }
     }
-    .padding({ left: 16, right: 12 })
     .width(CommonConstants.FULL_WIDTH)
     .height(30)
+    .padding({ left: 16, right: 12 })
   }
 
   @Builder
