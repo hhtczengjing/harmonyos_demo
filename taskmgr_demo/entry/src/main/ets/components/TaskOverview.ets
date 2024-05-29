@@ -12,9 +12,9 @@ export default struct TaskOverview {
   @Builder
   Header() {
     Row() {
-      Image($r('app.media.startIcon'))
-        .width(96)
-        .height(96)
+      Image($r('app.media.ic_todo'))
+        .width(90)
+        .height(90)
         .objectFit(ImageFit.Fill)
 
       Column({space: 6}) {

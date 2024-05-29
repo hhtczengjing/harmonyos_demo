@@ -101,7 +101,7 @@ export default struct TaskItem {
       }
       .width(CommonConstants.FULL_WIDTH)
       .height(this.isExpanded ? 148 : 64)
-      .opacity(this.latestProgress === 100 ? 0.6 : 1) // 完成的任务调整透明度
+      .opacity(this.latestProgress === CommonConstants.SLIDER_MAX_VALUE ? CommonConstants.OPACITY : CommonConstants.NO_OPACITY) // 完成的任务调整透明度
       .backgroundColor(this.selectedTask[this.index] ? '#1A007DFF' : Color.White)
       .borderRadius(24)
       .onClick(() => {

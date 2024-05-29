@@ -26,4 +26,14 @@ export default class CommonConstants {
    * slider步长: 1
    */
   static readonly SLIDER_STEP: number = 1;
+
+  /**
+   * 透明度: 0.6
+   */
+  static readonly OPACITY: number = 0.6;
+
+  /**
+   * 透明度: 1.0
+   */
+  static readonly NO_OPACITY: number = 1;
 }

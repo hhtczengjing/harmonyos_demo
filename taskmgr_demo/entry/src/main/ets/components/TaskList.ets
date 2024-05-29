@@ -154,6 +154,8 @@ export default struct TaskList {
     if (this.isEditMode) {
       Button('删除')
         .operateButtonStyle('#E84026')
+        .opacity(this.isAnyTaskSelected() ? CommonConstants.NO_OPACITY : CommonConstants.OPACITY)
+        .enabled(this.isAnyTaskSelected() ? true : false)
         .onClick(() => {
           // 通知上层删除任务
           if (this.onDeleteClick) {
@@ -176,6 +178,10 @@ export default struct TaskList {
           Logger.info('点击新增')
         })
     }
+  }
+
+  isAnyTaskSelected(): boolean {
+    return this.selectedTask.filter((item) => item === true).length > 0
   }
 
   onSelectedTaskChanged() {
