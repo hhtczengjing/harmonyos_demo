@@ -5,6 +5,7 @@ import mineDataService from '../services/MineContentDataService'
 import MineContentData from '../models/MineContentData'
 import SettingListItemData from '../models/mine/SettingListItemData'
 import { router } from '@kit.ArkUI'
+import PreferencesManager from '../common/utils/PreferencesManager'
 
 @Component
 export default struct MineContentView {
@@ -57,7 +58,10 @@ export default struct MineContentView {
           .backgroundColor('#E5E8EA')
           .margin({bottom: 44})
           .onClick(() => {
-            router.replaceUrl({url: 'pages/LoginPage'})
+            let sp = new PreferencesManager(getContext(this), 'AppSettings')
+            sp.deleteObject('LoginData').then(() => {
+              router.replaceUrl({url: 'pages/LoginPage'})
+            })
           })
       }
       .margin({left: 16, right: 16, bottom: 40})

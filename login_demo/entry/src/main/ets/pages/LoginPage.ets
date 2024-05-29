@@ -1,4 +1,5 @@
 import { promptAction, router } from '@kit.ArkUI';
+import PreferencesManager from '../common/utils/PreferencesManager';
 import RegisterDialog from '../components/RegisterDialog';
 
 @Entry
@@ -178,8 +179,10 @@ struct Index {
     this.timeOutId = setTimeout(() => {
       this.isLoading = false;
       this.timeOutId = -1;
-      AppStorage.set<Record<string, string>>('LoginData', {'account': this.account, 'password': this.password});
-      router.replaceUrl({ url: 'pages/MainPage' });
+      let sp = new PreferencesManager(getContext(this), 'AppSettings')
+      sp.setObject("LoginData", JSON.stringify({'account': this.account, 'password': this.password})).then(() => {
+        router.replaceUrl({ url: 'pages/MainPage' });
+      })
     }, 2000);
   }
 }
