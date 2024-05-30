@@ -1,4 +1,4 @@
-import { http } from '@kit.NetworkKit'
+import { http } from '@kit.NetworkKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 
 interface IResponseData {
@@ -8,10 +8,10 @@ interface IResponseData {
 }
 
 export default class RequestUtil {
-  public static sendRequest<T>(): Promise<T> {
+  public static sendRequest<T>(type: number, page: number): Promise<T> {
     let httpRequest = http.createHttp()
     return new Promise((resolve, reject) => {
-      httpRequest.request('https://v2.alapi.cn/api/new/toutiao?token=qlVquQZPYSeaCi6u', {
+      httpRequest.request(`https://v2.alapi.cn/api/new/toutiao?token=qlVquQZPYSeaCi6u&type=${type}&page=${page}`, {
         method: http.RequestMethod.GET,
         header: {
           'Content-Type': 'application/json'
@@ -25,6 +25,7 @@ export default class RequestUtil {
             resolve((respData.data as T))
             return
           }
+          reject(new Error('加载失败'))
         }
       }).catch((error: BusinessError) => {
         reject(error)
