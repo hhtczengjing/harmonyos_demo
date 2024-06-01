@@ -1,5 +1,4 @@
 import { Header } from '../common/components/Header';
-import currentTime from '../common/utils/DateTime';
 import AddTaskDialog from '../components/AddTaskDialog';
 import TaskList from '../components/TaskList';
 import TaskOverview from '../components/TaskOverview';
@@ -11,9 +10,8 @@ import CommonConstants from '../common/constants/CommonConstants';
 @Entry
 @Component
 struct HomePage {
-
   // 所有的任务列表
-  @State tasks: Task[] = Tasks.allTaskData;
+  @State tasks: Task[] = [];
   // 任务总数
   @State totalCount: number = 0;
   // 完成的任务数量
@@ -22,7 +20,6 @@ struct HomePage {
   @State latestUpdateDate: string = '--';
   // 状态变化监听
   @Provide @Watch('onProgressChanged') progressChanged: boolean = false;
-
   // 新建任务弹框
   dialogController = new CustomDialogController({
     builder: AddTaskDialog({
@@ -36,35 +33,32 @@ struct HomePage {
 
   saveTask(value: string) {
     if (value === '') {
-      promptAction.showToast({
-        message: "任务名称不能为空!",
-        duration: 2000
-      })
+      promptAction.showToast({ message: "任务名称不能为空!", duration: 2000 })
       return
     }
     // 新增一条数据
-    Tasks.add(new Task(value, currentTime(), 0))
-    // 刷新数据
-    this.reloadData()
+    Tasks.addTask(value).then(() => {
+      // 刷新数据
+      this.reloadData()
+    })
     // 关闭弹框
     this.dialogController.close()
   }
 
   aboutToAppear(): void {
-    this.tasks = Tasks.allTaskData
-    this.totalCount = this.tasks.length
-    this.completedCount = this.tasks.filter((task) => {
-      return task.progress == CommonConstants.SLIDER_MAX_VALUE;
-    }).length
+    // 初始化加载数据
+    Tasks.queryAll().then(() => {
+      this.reloadData()
+    })
   }
 
   reloadData(): void {
     this.tasks = Tasks.allTaskData
     this.totalCount = this.tasks.length
     this.completedCount = this.tasks.filter((task) => {
-      return task.progress == CommonConstants.SLIDER_MAX_VALUE;
+      return task.progress == CommonConstants.SLIDER_MAX_VALUE
     }).length
-    this.latestUpdateDate = currentTime()
+    this.latestUpdateDate = Tasks.latestUpdateDate
   }
 
   build() {
@@ -87,9 +81,16 @@ struct HomePage {
         },
         onDeleteClick: (selectedTasks: boolean[]) => {
           // 删除数据
-          Tasks.delete(selectedTasks)
-          // 重新获取全部任务
-          this.reloadData()
+          Tasks.deleteTasks(selectedTasks).then(() => {
+            // 重新获取全部任务
+            this.reloadData()
+          })
+        },
+        onProgressChanged: (id, progress) => {
+          Tasks.updateTask(id, progress).then(() => {
+            // 重新获取全部任务
+            this.reloadData()
+          })
         }
       })
         .height('60%')

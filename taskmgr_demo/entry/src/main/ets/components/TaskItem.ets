@@ -1,5 +1,5 @@
 import CommonConstants from '../common/constants/CommonConstants';
-import currentTime from '../common/utils/DateTime';
+import { currentTime } from '../common/utils/DateTime';
 import Task from '../models/Task';
 import ProgressEdit from './ProgressEdit';
 
@@ -23,6 +23,8 @@ export default struct TaskItem {
   @Link selectedTask: boolean[];
   // 进度变化
   @Consume progressChanged: boolean;
+  // 任务状态变化的回调处理
+  onProgressChanged?: (id: number, progress: number) => void;
 
   aboutToAppear(): void {
     // 在组件显示前先从任务初始化数据
@@ -95,13 +97,18 @@ export default struct TaskItem {
               this.progressChanged = !this.progressChanged
               // 将编辑区域折叠
               this.isExpanded = false
+              // 任务进度变化通知上层处理
+              if (this.onProgressChanged) {
+                this.onProgressChanged(this.task.id, value);
+              }
             }
           })
         }
       }
       .width(CommonConstants.FULL_WIDTH)
       .height(this.isExpanded ? 148 : 64)
-      .opacity(this.latestProgress === CommonConstants.SLIDER_MAX_VALUE ? CommonConstants.OPACITY : CommonConstants.NO_OPACITY) // 完成的任务调整透明度
+      .opacity(this.latestProgress === CommonConstants.SLIDER_MAX_VALUE ? CommonConstants.OPACITY :
+      CommonConstants.NO_OPACITY) // 完成的任务调整透明度
       .backgroundColor(this.selectedTask[this.index] ? '#1A007DFF' : Color.White)
       .borderRadius(24)
       .onClick(() => {

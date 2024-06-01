@@ -17,7 +17,7 @@ export default struct TaskOverview {
         .height(90)
         .objectFit(ImageFit.Fill)
 
-      Column({space: 6}) {
+      Column({ space: 6 }) {
         Text('2024开发任务')
           .fontSize($r('sys.float.ohos_id_text_size_sub_title1'))
           .fontColor($r('sys.color.ohos_id_color_text_primary'))
@@ -27,7 +27,7 @@ export default struct TaskOverview {
           .fontSize($r('sys.float.ohos_id_text_size_sub_title2'))
           .fontColor($r('sys.color.ohos_id_color_text_secondary'))
       }
-      .margin({left: 20})
+      .margin({ left: 20 })
     }
     .padding(10)
     .width(CommonConstants.FULL_WIDTH)
@@ -36,7 +36,7 @@ export default struct TaskOverview {
   @Builder
   TotalProgress() {
     Row() {
-      Column({space: 4}) {
+      Column({ space: 4 }) {
         Text('总进度')
           .fontSize($r('sys.float.ohos_id_text_size_sub_title1'))
           .fontWeight(FontWeight.Bold)

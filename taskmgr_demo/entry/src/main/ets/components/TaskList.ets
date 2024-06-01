@@ -35,6 +35,8 @@ export default struct TaskList {
   onAddClick?: () => void;
   // 点击删除按钮的回调处理
   onDeleteClick?: (selectedTask: boolean[]) => void;
+  // 任务状态变化的回调处理
+  onProgressChanged?: (id: number, progress: number) => void;
 
   build() {
     Column() {
@@ -66,7 +68,12 @@ export default struct TaskList {
               index: index,
               task: item,
               isEditMode: this.isEditMode,
-              selectedTask: this.selectedTask
+              selectedTask: this.selectedTask,
+              onProgressChanged: (id, progress) => {
+                if (this.onProgressChanged) {
+                  this.onProgressChanged(id, progress)
+                }
+              }
             })
           }
         })
