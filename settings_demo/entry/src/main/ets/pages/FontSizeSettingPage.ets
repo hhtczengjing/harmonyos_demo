@@ -24,11 +24,27 @@ struct FontSizeSettingPage {
     { icon: $r('app.media.left_head'), text: '生活状态越来越好，你也一起试试吧？', direction: ChatMessageDirection.LEFT }
   ]
 
-  aboutToAppear(): void {
+  onPageShow(): void {
     PreferencesManager.sharedManager().getValue("FontSize", 16).then((value) => {
       this.fontSize = value;
       console.info('从首选项加载上次设置的字体大小：' + this.fontSize);
     });
+  }
+
+  @Builder
+  ChatMessageView() {
+    List({ space: 16 }) {
+      ForEach(this.chatMessages, (item: IChatMessageItem) => {
+        ListItem() {
+          ChatMessageListItem({
+            item: item,
+            fontSize: this.fontSize
+          })
+        }
+      })
+    }
+    .width(CommonConstants.FULL_WIDTH)
+    .padding({ left: 16, right: 16 })
   }
 
   build() {
@@ -36,19 +52,9 @@ struct FontSizeSettingPage {
       NaviBar({ title: '字体大小设置' })
 
       // 消息列表
-      List({ space: 16 }) {
-        ForEach(this.chatMessages, (item: IChatMessageItem) => {
-          ListItem() {
-            ChatMessageListItem({
-              item: item,
-              fontSize: this.fontSize
-            })
-          }
-        })
-      }
-      .width(CommonConstants.FULL_WIDTH)
-      .padding({ left: 16, right: 16 })
+      this.ChatMessageView()
 
+      // 空白区域
       Blank()
 
       // 设置面板
