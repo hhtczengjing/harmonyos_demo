@@ -1,6 +1,8 @@
 {
   "src": [
     "pages/Index",
-    "pages/DetailPage"
+    "pages/DetailPage",
+    "pages/DownloadPage1",
+    "pages/DownloadPage2"
   ]
 }

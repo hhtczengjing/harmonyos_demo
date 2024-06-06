@@ -33,7 +33,7 @@ export struct NaviBar {
         .size({ width: 24, height: 24 })
         .onClick(() => {
           if (this.onClickLeft) {
-            this.onClickRight()
+            this.onClickLeft()
           } else {
             router.back()
           }
